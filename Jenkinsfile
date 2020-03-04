@@ -17,10 +17,13 @@ try {
 				try {
 					withCredentials([usernamePassword(credentialsId: 'gradle_enterprise_cache_user',
 							passwordVariable: 'GRADLE_ENTERPRISE_CACHE_PASSWORD',
-							usernameVariable: 'GRADLE_ENTERPRISE_CACHE_USERNAME')]) {
+							usernameVariable: 'GRADLE_ENTERPRISE_CACHE_USERNAME'),
+                        string(credentialsId: 'gradle_enterprise_secret_access_key',
+							variable: 'GRADLE_ENTERPRISE_ACCESS_KEY')]) {
 							withEnv(["JAVA_HOME=${ tool 'jdk8' }",
 							"GRADLE_ENTERPRISE_CACHE_USERNAME=${GRADLE_ENTERPRISE_CACHE_USERNAME}",
-							"GRADLE_ENTERPRISE_CACHE_PASSWORD=${GRADLE_ENTERPRISE_CACHE_PASSWORD}"]) {
+							"GRADLE_ENTERPRISE_CACHE_PASSWORD=${GRADLE_ENTERPRISE_CACHE_PASSWORD}",
+							"GRADLE_ENTERPRISE_ACCESS_KEY=${GRADLE_ENTERPRISE_ACCESS_KEY}"]) {
 							sh "./gradlew clean check  --no-daemon --stacktrace"
 						}
 					}
